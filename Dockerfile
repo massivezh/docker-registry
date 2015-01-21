@@ -9,6 +9,7 @@
 FROM ubuntu:14.04
 
 # Update
+RUN sed -i 's/archive.ubuntu.com/cn.archive.ubuntu.com/g' /etc/apt/sources.list
 RUN apt-get update \
 # Install pip
     && apt-get install -y \
@@ -40,3 +41,7 @@ ENV SETTINGS_FLAVOR dev
 EXPOSE 5000
 
 CMD ["docker-registry"]
+
+# usage
+# make sure ip_forware = 1
+# docker run -d -e SETTINGS_FLAVOR=prod --name registry -h registry -p 5000: -v /registry:/registry -e DOCKER_REGISTRY_CONFIG=/registry/etc/config.yml registry
